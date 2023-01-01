@@ -1,0 +1,115 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col ">
+            <img src="/static/images/general-quarters.png" class="img-fluid img-thumbnail mx-auto d-block room-image" alt="room image">
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col">
+            <h1 class="text-center mt-4">General's Sweet</h1>
+            <p> Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.Your home away from Home, set on the majestic waters of the Atlantic Ocean, this will
+                be vacation to remember.</p>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <a id="check-availability" href="#!" class="btn btn-success">Check Availability</a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+{{end}}
+
+{{define "js"}}
+<script>
+
+    document.getElementById("check-availability").addEventListener("click",function (){
+      // let myEls=   document.getElementById("mypara")
+      // if(myEls.classList.contains("red-text")){
+      //     myEls.classList.remove("red-text")
+      // }else {
+      //     myEls.classList.add("red-text")
+      // }
+
+      // notify("this is my message","success")
+      //     notifyModel('Error!','Do you want to continue','error','Cool')
+
+      //   notifyModel('title!','<em>Hello,World</em>','success','My Text for the button')
+      // attention.toast({msg:"Hello,World",icon:"error"})
+      //  attention.success({msg:"Hello,World" })
+
+      let html=`
+          <form id="check-availability-form" action="" method="post" novalidate class="needs validation">
+              <div class="row g-3" id="reservation-dates-modal">
+                  <div class="col-md-6">
+                       <div class="mb-3" >
+
+                           <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival"/>
+                      </div>
+                  </div>
+                    <div class="col-md-6">
+                           <div class="mb-3" >
+
+                               <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure"/>
+                          </div>
+                      </div>
+              </div>
+
+
+          </form>
+          `
+
+      // attention.error({msg:"Hello,World" })
+      attention.custom({
+            msg:html,
+            title:"Choose your dates",
+          willOpen:()=>{
+              const elem=document.getElementById('reservation-dates-modal');
+              const rp=new DateRangePicker(elem,{
+                  format:'yyyy-mm-dd',
+                  showOnFocus:true,
+              })
+          },
+          didOpen:()=>{
+
+              document.getElementById('start').removeAttribute('disabled');
+              document.getElementById('end').removeAttribute('disabled');
+
+
+          },
+            callback: function (result){
+                console.log("called")
+                let form=document.getElementById("check-availability-form");
+                let formData=new FormData(form);
+                formData.append("csrf_token","{{.CSRFToken}}")
+                fetch('/search-availability-json',{
+                    method:"post",
+                    body:formData,
+                })
+                    .then(response=>response.json())
+                    .then(data=>{
+                        console.log(data)
+                    })
+            }
+        })
+    })
+
+</script>
+{{end}}

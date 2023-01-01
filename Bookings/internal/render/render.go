@@ -3,8 +3,9 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/suyashs52/golang/bookings/pkg/config"
-	"github.com/suyashs52/golang/bookings/pkg/models"
+	"github.com/justinas/nosurf"
+	"github.com/suyashs52/golang/bookings/internal/config"
+	"github.com/suyashs52/golang/bookings/internal/models"
 	"html/template"
 	"log"
 	"net/http"
@@ -68,11 +69,12 @@ func createTemplateCache(t string) error {
 	return nil
 }
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, temp string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, temp string, td *models.TemplateData) {
 	//create template cached
 	//tc, err := CreateTemplateCache1()
 
@@ -94,7 +96,7 @@ func RenderTemplate(w http.ResponseWriter, temp string, td *models.TemplateData)
 	}
 	buf := new(bytes.Buffer)
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	err := t.Execute(buf, td)
 

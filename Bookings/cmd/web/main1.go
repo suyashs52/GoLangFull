@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/suyashs52/golang/bookings/pkg/config"
-	"github.com/suyashs52/golang/bookings/pkg/handlers"
-	"github.com/suyashs52/golang/bookings/pkg/render"
+	"github.com/suyashs52/golang/bookings/internal/config"
+	"github.com/suyashs52/golang/bookings/internal/handlers"
+	"github.com/suyashs52/golang/bookings/internal/render"
 	"log"
 	"net/http"
 	"time"
@@ -39,7 +39,7 @@ func main() {
 	tc, err := render.CreateTemplateCache1()
 
 	if err != nil {
-		log.Fatal("cannot create template cache")
+		log.Fatal("cannot create template cache", err)
 	}
 
 	app.TemplateCache = tc

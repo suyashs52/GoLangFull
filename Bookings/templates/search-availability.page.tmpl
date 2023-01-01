@@ -1,0 +1,57 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h1 class="mt-5">Serch for Availability</h1>
+            <form action="/search-availability" method="POST" novalidate class="needs-validation">
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+                <div id="reservation-dates" class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+
+
+                            <input type="text" required class="form-control" name="start" placeholder="Arrival Date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <input type="text" required class="form-control" name="end" placeholder="Departure Date">
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <button type="submit" class="btn btn-primary">Search Availability</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col">
+        <p id="mypara">This is some test </p>
+        <p>
+            <button class="btn btn-outline-secondary" id="mybtn">Click me</button>
+        </p>
+    </div>
+</div>
+
+
+{{end}}
+
+{{define "js"}}
+<script>
+    const elem = document.getElementById('reservation-dates');
+    const rangepicker = new DateRangePicker(elem, {
+        // ...options
+        format: "yyyy-mm-dd"
+    });
+</script>
+{{end}}
