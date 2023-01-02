@@ -3,12 +3,14 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
+	"github.com/suyashs52/golang/bookings/helpers"
 	"github.com/suyashs52/golang/bookings/internal/config"
 	"github.com/suyashs52/golang/bookings/internal/handlers"
 	"github.com/suyashs52/golang/bookings/internal/models"
 	"github.com/suyashs52/golang/bookings/internal/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -18,6 +20,8 @@ const portNumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 // main the the main application
 // in WebBasic ....go run cmd/web/*.go
@@ -55,6 +59,12 @@ func run() error {
 	app.InProduction = false
 	//true when in production
 
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErroLog = errorLog
+
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
@@ -78,6 +88,8 @@ func run() error {
 	handlers.NewHandler(repo)
 
 	render.NewTemplates(&app)
+
+	helpers.NewHelper(&app)
 
 	// http.HandleFunc("/", handlers.Repo.Home)
 	// http.HandleFunc("/about", handlers.Repo.About)

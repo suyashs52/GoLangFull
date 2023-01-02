@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/suyashs52/golang/bookings/helpers"
 	"github.com/suyashs52/golang/bookings/internal/config"
 	"github.com/suyashs52/golang/bookings/internal/forms"
 	"github.com/suyashs52/golang/bookings/internal/models"
@@ -33,15 +34,15 @@ func NewHandler(r *Repository) {
 // Home is the home page handler
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
-	remoteIP := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+	//remoteIP := r.RemoteAddr
+	//m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	//perform the logic
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Hello, Again"
+	//stringMap := make(map[string]string)
+	//stringMap["test"] = "Hello, Again"
 
 	//send the data to template
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
+		//StringMap: stringMap,
 	})
 }
 
@@ -75,7 +76,8 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		//log.Println(err)
 		return
 	}
 
@@ -110,6 +112,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation) //return of type reservation
 	if !ok {
+		m.App.ErroLog.Println("canot get item from session")
 		log.Println("canot get item from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
@@ -157,10 +160,10 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
-	log.Println(out)
 	w.Header().Set("Content-Type", "application/json")
 
 	w.Write(out)
