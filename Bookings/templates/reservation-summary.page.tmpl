@@ -1,0 +1,44 @@
+{{template "base" .}}
+
+{{define "content"}}
+{{$res:= index .Data "reservation"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5">Reservation Summary</h1>
+            <hr/>
+
+            <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{$res.FirstName}} {{$res.LastName}}</td>
+                </tr>  <tr>
+                    <td>Arrival:</td>
+                    <td>{{$res.FirstName}}</td>
+                </tr>  <tr>
+                    <td>Departure:</td>
+                    <td>{{$res.FirstName}}</td>
+                </tr>  <tr>
+                    <td>Email:</td>
+                    <td>{{$res.Email}}</td>
+                </tr>  <tr>
+                    <td>Phone:</td>
+                    <td>{{$res.Phoneno}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>This is dev para</p>
+            <p> this come from the templates {{index .StringMap "test"}}</p>
+            <p>
+                {{if ne (index .StringMap "remote_ip") ""}}
+                if not equal to empty string, Your remote IP address is {{index .StringMap "remote_ip"}}
+                {{else}}
+                I don't know your ip address yet .  Visit the <a href="/">Home Page</a> so I can set it.
+                {{end}}
+                this come from the templates {{index .StringMap "test"}}</p>
+        </div>
+    </div>
+</div>
+{{end}}

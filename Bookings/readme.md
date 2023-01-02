@@ -6,4 +6,7 @@ This is the repository for my booking and reservation project using GoLang
 - Uses the [chi router](https://github.com/go-chi/chi)
 - Uses [alex edwards SCS](https://github.com/alexedwards/scs/v2) session management
 - Uses [nosurf](https://github.com/jusinas/nosurf)
-- 
+
+
+Create shell script and Add permission to execute using
+chmod +x run.sh

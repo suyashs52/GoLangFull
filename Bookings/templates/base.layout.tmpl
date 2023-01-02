@@ -102,6 +102,20 @@
     })
   }
 
+  {{with .Error}}
+  notify("{{.}}","error")
+  {{end}}
+
+  {{with .Flash}}
+  notify("{{.}}","success")
+
+  {{end}}
+
+  {{with .Warning}}
+  notify("{{.}}","warning")
+
+  {{end}}
+
   let attention=Promt();
   function  Promt(){
     let toast=function (c){

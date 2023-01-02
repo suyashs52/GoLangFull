@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"github.com/suyashs52/golang/bookings/internal/config"
 	"github.com/suyashs52/golang/bookings/internal/handlers"
+	"github.com/suyashs52/golang/bookings/internal/models"
 	"github.com/suyashs52/golang/bookings/internal/render"
 	"log"
 	"net/http"
@@ -23,7 +25,32 @@ var session *scs.SessionManager
 // go mod tidy remove unused package
 // go get github.com/justinas/nosurf for csrf
 // go get github.com/alexedwards/scs/v2 for sessions
+// in .zprofile write alias coverage=" go test -coverprofile=coverage.out && go tool cover -html=coverage.out"
 func main() {
+
+	err := run()
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	fmt.Println(fmt.Sprintf("Starting the application on port %s", portNumber))
+	//_ = http.ListenAndServe(portNumber, nil)
+
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+
+}
+
+func run() error {
+	//what am i going to put in the session
+	gob.Register(models.Reservation{})
 
 	app.InProduction = false
 	//true when in production
@@ -40,6 +67,7 @@ func main() {
 
 	if err != nil {
 		log.Fatal("cannot create template cache", err)
+		return err
 	}
 
 	app.TemplateCache = tc
@@ -53,16 +81,5 @@ func main() {
 
 	// http.HandleFunc("/", handlers.Repo.Home)
 	// http.HandleFunc("/about", handlers.Repo.About)
-
-	fmt.Println(fmt.Sprintf("Starting the application on port %s", portNumber))
-	//_ = http.ListenAndServe(portNumber, nil)
-
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-
-	err = srv.ListenAndServe()
-	log.Fatal(err)
-
+	return err
 }

@@ -1,0 +1,22 @@
+mode: set
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:22.47,26.2 1 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:29.32,31.2 1 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:34.67,46.2 5 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:49.68,59.2 5 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:62.74,72.2 4 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:75.78,77.16 2 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:82.2,96.19 6 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:105.2,106.66 2 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:77.16,80.3 2 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:96.19,104.3 3 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:110.81,112.9 2 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:119.2,124.4 4 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:112.9,117.3 4 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:128.71,131.2 1 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:134.69,137.2 1 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:140.75,143.2 1 1
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:151.79,159.16 3 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:163.2,166.14 3 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:159.16,161.3 1 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:171.79,177.2 3 0
+github.com/suyashs52/golang/bookings/internal/handlers/handler.go:180.70,183.2 1 1
